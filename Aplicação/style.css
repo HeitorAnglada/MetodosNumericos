@@ -1,21 +1,60 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 30px;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
 }
 
 label {
-    margin-top: 10px;
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
 }
 
-input, button {
+input[type="text"], input[type="number"] {
+    width: 250px;
+    padding: 10px;
     margin-top: 5px;
-    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 #result {
-    margin-top: 20px;
-    font-weight: bold;
+    margin-top: 30px;
+    font-size: 18px;
+    color: #333;
+}
+
+#iterationsContainer {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    overflow: auto; /* Adiciona barra de rolagem se necessário */
+    max-height: 200px; /* Limita a altura da caixa */
+}
+
+#iterations {
+    font-family: monospace; /* Usa fonte monoespaçada para melhor alinhamento */
+    white-space: pre-wrap; /* Permite quebra de linha automática */
 }

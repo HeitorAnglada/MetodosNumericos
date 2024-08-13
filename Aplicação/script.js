@@ -17,11 +17,12 @@ function bisectionMethod(f, a, b, tol) {
     return (a + b) / 2; 
 }
 
-function suggestIntervals(f, a, b) { // caso intervalo seja muito grande, função que sugere novos intervalos dentro do intervalo
+// caso intervalo seja muito grande, função que sugere novos intervalos dentro do intervalo
+function suggestIntervals(f, a, b) { 
     let possibleIntervals = [];
     for (let i = a; i < b; i++) { // verifica todos os sub intervalos de tamanho 1
         if (f(i) * f(i + 1) <= 0) {
-            possibleIntervals.push([i, i + 1]);
+            possibleIntervals.push([i, i + 1]); // caso seja um intervalo válido, adciona na lista
         }
     }
     return possibleIntervals;
