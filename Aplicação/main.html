@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Método da Bisseção</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Método da Bisseção</h1>
+
+    <label for="function">Função (f(x)):</label>
+    <input type="text" id="function" value="x**7 - 25/49">
+
+    <label for="a">Limite inferior (a):</label>
+    <input type="number" id="a" value="0">
+
+    <label for="b">Limite superior (b):</label>
+    <input type="number" id="b" value="1">
+
+    <label for="tolerance">Tolerância:</label>
+    <input type="number" id="tolerance" value="0.001">
+
+    <button onclick="calculateRoot()">Calcular Raiz</button>
+
+    <p id="result"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>
