@@ -1,0 +1,6 @@
+.gitignore
+iterations.js
+README.md
+.dockerignore
+.git
+.github
