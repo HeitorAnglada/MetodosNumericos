@@ -16,6 +16,7 @@ let tol = parseFloat(inputTol.value);
 
 showIterations(showIterationsCheckbox.checked);
 
+
 showIterationsCheckbox.addEventListener("change", function() {
     showIterations(this.checked);
 });
@@ -110,6 +111,10 @@ function calculateRoot() {
             const root = bisectionMethod(f, a, b, tol);
 
             document.getElementById("result").textContent = "Raiz aproximada: " + root;
+
+            if (showIterationsCheckbox.checked) {
+                showIterations(true);
+            }
 
         } catch (error) {
             document.getElementById("result").textContent = "Erro: " + error.message;
