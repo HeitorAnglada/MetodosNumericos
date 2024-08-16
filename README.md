@@ -2,6 +2,8 @@
 
 Este repositório contém uma aplicação desenvolvida como parte da primeira atividade da disciplina de Métodos Numéricos do curso de Engenharia da Computação e Telecomunicações da UFPA. A aplicação implementa o método da biseção para encontrar raízes de funções contínuas.
 
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="40" height="40"/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" width="40" height="40"/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width="40" height="40"/>
+
 ## Descrição
 
 O método da biseção é uma técnica de aproximação numérica utilizada para encontrar raízes de funções contínuas. Este método se baseia no Teorema do Valor Intermediário, que afirma que, se uma função contínua muda de sinal em um intervalo \([a, b]\), então existe pelo menos uma raiz dentro desse intervalo.
@@ -31,5 +33,10 @@ Siga os passos abaixo para executar a aplicação localmente:
     ```
 3. Abra o arquivo `main.html` no seu navegador.
 
+## Tela da Aplicação ##
+![Tela da Aplicação](/image/CapturadeTela.png)
+
+## Diagrama de Blocos ##
+![Driagrama de Blocos](/image/Diagrama.png)
 
 
