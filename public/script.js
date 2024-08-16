@@ -3,11 +3,13 @@ const inputA = document.getElementById("a");
 const inputB = document.getElementById("b");
 const inputTol = document.getElementById("tolerance");
 
-
+// criando elementos
 const showIterationsCheckbox = document.getElementById("showIterationsCheckbox");
 const iterationsContainer = document.getElementById("iterationsContainer");
 const iterationsPre = document.getElementById("iterations");
 
+
+// inicializando variáveis
 let iterations = [];
 let functionInput = funInput.value;
 let a = parseFloat(inputA.value);
@@ -23,7 +25,6 @@ showIterationsCheckbox.addEventListener("change", function() {
 // adicionando evento de mudança nos inputA
 inputA.addEventListener("change", e => {
     a = parseFloat(e.target.value);
-
 });
 
 // adicionando evento de mudança nos inputB
@@ -41,8 +42,6 @@ funInput.addEventListener("change", e => {
     functionInput = e.target.value;
     f = new Function('x', 'return ' + functionInput);
 });
-
-
 
 /**
  * Toggles the display of the iterations container based on the `show` parameter.
@@ -65,6 +64,7 @@ function showIterations(show) {
         iterationsContainer.style.display = "none";
     }
 }
+
 /**
  * Encontra a raiz de uma função usando o método da bissecção.
  *
@@ -75,29 +75,47 @@ function showIterations(show) {
  * @return {number} A raiz aproximada da função.
  */
 function bisectionMethod(f, a, b, tol) {
+    // Verifica se a função muda de sinal no intervalo
     if (f(a) * f(b) >= 0) {
         throw new Error("A função não muda de sinal no intervalo fornecido.");
     }
 
+    // Inicializa o contador de iterações
     let iterationCount = 0;
+
+    // Enquanto o comprimento do intervalo for maior que a tolerância,
+    // executa o loop de iteração
     while (Math.abs(b - a) / 2 > tol) {
+        // Calcula o ponto médio do intervalo
         let midpoint = (a + b) / 2;
 
+        // Adiciona o registro da iteração atual na matriz de iterações
         iterations = [...iterations, `Iteração ${++iterationCount}: a = ${a.toFixed(4)}, b = ${b.toFixed(4)}, midpoint = ${midpoint.toFixed(4)}, f(midpoint) = ${f(midpoint).toFixed(4)}`]; 
+
+        // Verifica se a função tem um valor igual a zero no ponto médio
         if (f(midpoint) === 0) {
+            // Se sim, retorna o ponto médio como a raiz aproximada
             return midpoint;
         } else if (f(a) * f(midpoint) < 0) {
+            // Se a função muda de sinal entre o ponto médio e o limite inferior,
+            // atualiza o limite superior para o ponto médio
             b = midpoint;
         } else {
+            // Se a função muda de sinal entre o ponto médio e o limite superior,
+            // atualiza o limite inferior para o ponto médio
             a = midpoint;
         }
     }
 
+    // Se a tolerância for alcançada, retorna o ponto médio como a raiz aproximada
     return (a + b) / 2;
 }
 
 /**
  * Encontra todos os intervalos dentro do intervalo dado onde a função f muda de sinal.
+ *
+ * Essa função itera sobre o intervalo [a, b] e verifica se a função f muda de sinal em cada
+ * ponto. Se a função muda de sinal, o intervalo é adicionado na matriz de intervalos.
  *
  * @param {function} f - A função para verificar mudanças de sinal.
  * @param {number} a - O limite inferior do intervalo.
@@ -105,12 +123,19 @@ function bisectionMethod(f, a, b, tol) {
  * @return {Array<Array<number>>} Uma matriz de intervalos onde a função f muda de sinal.
  */
 function suggestIntervals(f, a, b) {
+    // Inicializa a matriz de intervalos
     let possibleIntervals = [];
+
+    // Itera sobre o intervalo
     for (let i = a; i < b; i++) {
+        // Verifica se a função muda de sinal no ponto atual
         if (f(i) * f(i + 1) <= 0) {
+            // Se sim, adiciona o intervalo na matriz de intervalos
             possibleIntervals.push([i, i + 1]);
         }
     }
+
+    // Retorna a matriz de intervalos
     return possibleIntervals;
 }
 
@@ -123,30 +148,40 @@ function suggestIntervals(f, a, b) {
  * @return {number} A raiz aproximada da função, ou uma mensagem de erro se o cálculo falhar.
  */
 function calculateRoot() {
+    // Verifica se o intervalo é muito grande
     if (Math.abs(b - a) > 1) {
+        // Encontra todos os intervalos possíveis dentro do intervalo dado
         let possibleIntervals = suggestIntervals(f, a, b);
 
         if (possibleIntervals.length === 0) {
+            // Mostra mensagem de erro se nenhum intervalo válido for encontrado
             document.getElementById("result").textContent = "Nenhum intervalo válido encontrado. Tente outro intervalo inicial.";
         } else {
+            // Mostra os intervalos possíveis
             let intervalsString = possibleIntervals.map(interval => `[${interval[0]}, ${interval[1]}]`).join(", ");
             document.getElementById("result").textContent = "Possíveis intervalos: " + intervalsString;
         }
 
-        iterationsContainer.style.display = "none"; // Oculta a caixa de iterações se o intervalo for grande
+        // Oculta a caixa de iterações se o intervalo for grande
+        iterationsContainer.style.display = "none"; 
     } else {
         try {
+            // Utiliza o método da bissecção para encontrar a raiz aproximada
             const root = bisectionMethod(f, a, b, tol);
 
+            // Mostra a raiz aproximada encontrada
             document.getElementById("result").textContent = "Raiz aproximada: " + root;
 
+            // Mostra as iterações se o checkbox estiver marcado
             if (showIterationsCheckbox.checked) {
                 showIterations(true);
             }
 
         } catch (error) {
+            // Mostra mensagem de erro se o cálculo falhar
             document.getElementById("result").textContent = "Erro: " + error.message;
-            iterationsContainer.style.display = "none"; // Oculta a caixa de iterações em caso de erro
+            // Oculta a caixa de iterações em caso de erro
+            iterationsContainer.style.display = "none"; 
         }
     }
 }
