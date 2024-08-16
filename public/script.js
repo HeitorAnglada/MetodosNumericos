@@ -74,7 +74,7 @@ function showIterations(show) {
  * @param {number} tol - A tolerância para a aproximação.
  * @return {number} A raiz aproximada da função.
  */
-function bisectionMethod(f, a, b, tol) {
+function bisectionMethod(f, a, b, tol, maxIterations = 1000) {
     // Verifica se a função muda de sinal no intervalo
     if (f(a) * f(b) >= 0) {
         throw new Error("A função não muda de sinal no intervalo fornecido.");
@@ -83,17 +83,17 @@ function bisectionMethod(f, a, b, tol) {
     // Inicializa o contador de iterações
     let iterationCount = 0;
 
-    // Enquanto o comprimento do intervalo for maior que a tolerância,
+    // Enquanto o comprimento do intervalo for maior que a tolerância e o número de iterações for menor que o máximo,
     // executa o loop de iteração
-    while (Math.abs(b - a) / 2 > tol) {
+    while (Math.abs(b - a) / 2 > tol && iterationCount < maxIterations) {
         // Calcula o ponto médio do intervalo
         let midpoint = (a + b) / 2;
 
         // Adiciona o registro da iteração atual na matriz de iterações
-        iterations = [...iterations, `Iteração ${++iterationCount}: a = ${a.toFixed(4)}, b = ${b.toFixed(4)}, midpoint = ${midpoint.toFixed(4)}, f(midpoint) = ${f(midpoint).toFixed(4)}`]; 
+        iterations = [...iterations, `Iteração ${++iterationCount}: a = ${a.toFixed(4)}, b = ${b.toFixed(4)}, midpoint = ${midpoint.toFixed(4)}, f(midpoint) = ${f(midpoint).toFixed(4)}`];
 
-        // Verifica se a função tem um valor igual a zero no ponto médio
-        if (f(midpoint) === 0) {
+        // Verifica se o valor absoluto da função no ponto médio é menor que uma tolerância muito pequena
+        if (Math.abs(f(midpoint)) < 1e-10) {
             // Se sim, retorna o ponto médio como a raiz aproximada
             return midpoint;
         } else if (f(a) * f(midpoint) < 0) {
@@ -107,7 +107,12 @@ function bisectionMethod(f, a, b, tol) {
         }
     }
 
-    // Se a tolerância for alcançada, retorna o ponto médio como a raiz aproximada
+    // Se o número máximo de iterações for atingido, lança um erro
+    if (iterationCount >= maxIterations) {
+        throw new Error("O número máximo de iterações foi atingido. A convergência pode não ter ocorrido.");
+    }
+
+    // Se a tolerância for alcançada, retorna o ponto médio como a raiz proximada
     return (a + b) / 2;
 }
 
